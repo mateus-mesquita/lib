@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stats"
+version = "0.1.0"
+description = "Coleção de scripts e métodos para análises estatísticas e clusters."
+authors = [
+    {name = "Mateus Santos"}
+]
+requires-python = ">=3.8"
+dependencies = [
+    "scikit-learn",
+    "matplotlib",
+    "statsmodels",
+    "pandas",
+    "scipy",
+    "rich",
+    "ipython",
+    "tabulate"
+]
