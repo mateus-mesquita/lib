@@ -1,0 +1,30 @@
+{
+  "cycle": 1,
+  "current_doc_index": 0,
+  "reminder_count": 0,
+  "last_sent_at": null,
+  "next_send_at": null,
+  "documents": {
+    "Probabilidade e Variáveis Aleatórias": {
+      "current_block_index": 0,
+      "total_blocks": 12,
+      "completed_blocks": 0
+    },
+    "Inferência Estatística e Estimação": {
+      "current_block_index": 0,
+      "total_blocks": 10,
+      "completed_blocks": 0
+    },
+    "Modelos de Regressão e ANOVA": {
+      "current_block_index": 0,
+      "total_blocks": 15,
+      "completed_blocks": 0
+    },
+    "Estatística Não-Paramétrica e Testes": {
+      "current_block_index": 0,
+      "total_blocks": 10,
+      "completed_blocks": 0
+    }
+  },
+  "history": []
+}

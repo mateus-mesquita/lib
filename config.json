@@ -1,0 +1,35 @@
+{
+  "documents": [
+    {
+      "name": "Probabilidade e Variáveis Aleatórias",
+      "total": 120,
+      "block_size": 10,
+      "link": ""
+    },
+    {
+      "name": "Inferência Estatística e Estimação",
+      "total": 80,
+      "block_size": 8,
+      "link": ""
+    },
+    {
+      "name": "Modelos de Regressão e ANOVA",
+      "total": 150,
+      "block_size": 10,
+      "link": ""
+    },
+    {
+      "name": "Estatística Não-Paramétrica e Testes",
+      "total": 60,
+      "block_size": 6,
+      "link": ""
+    }
+  ],
+  "timezone": "America/Sao_Paulo",
+  "active_start": 8,
+  "active_end": 22,
+  "min_interval_min": 60,
+  "max_interval_min": 120,
+  "review_every": 4,
+  "est_minutes_per_block": 5
+}

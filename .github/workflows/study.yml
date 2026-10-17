@@ -1,0 +1,71 @@
+name: Revisão Ativa por E-mail
+
+on:
+  schedule:
+    # Executa a cada 30 minutos na janela de 08:00 às 22:30 em Brasília (UTC-3) -> 11:00 às 01:30 UTC
+    - cron: '*/30 11-23,0-1 * * *'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Forçar envio imediato (ignorar restrição de horário e janela)'
+        required: false
+        type: boolean
+        default: false
+      dry_run:
+        description: 'Modo dry-run (simular sem disparar e-mail nem salvar estado)'
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: study-reminder
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  remind:
+    name: Verificar e Enviar Lembrete
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do Repositório
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configurar Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Executar Script de Lembrete
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+        run: |
+          ARGS=""
+          if [ "${{ github.event.inputs.force }}" = "true" ]; then
+            ARGS="$ARGS --force"
+          fi
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+          python send_reminder.py $ARGS
+
+      - name: Persistir Atualizações no state.json
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add state.json
+          if git diff --staged --quiet; then
+            echo "Nenhuma alteração de estado para commitar."
+          else
+            git commit -m "chore: atualizar estado de estudo [skip ci]"
+            git push
+          fi
